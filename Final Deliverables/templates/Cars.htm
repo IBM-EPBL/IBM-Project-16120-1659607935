@@ -1,0 +1,170 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Resale Prediction</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Audiowide">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia&effect=shadow-multiple">
+    <style>
+        body {
+            background-color: khaki;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@900&display=swap');
+        h1 {
+            background: rgb(163, 57, 57);
+            text-align: center;
+            font-size: 70px;
+            letter-spacing: 0.1em;
+            -webkit-text-fill-color: transparent;
+            -webkit-text-stroke-width: 3px;
+            -webkit-text-stroke-color: white;
+            text-shadow: 3px 3px #295bff, 6px 6px #edf033;
+            font-family: "Audiowide", sans-serif;
+        }
+        
+        fieldset {
+            float: left;
+            background-color: aliceblue;
+        }
+        
+        td {
+            padding-top: 3px;
+            padding-bottom: 3px;
+            padding-left: 8px;
+            padding-right: 8px;
+            font-size: 25px;
+            font-family: 'Comic Sans MS', Comic Sans;
+        }
+        
+        h3 {
+            padding-top: 20px;
+        }
+        
+        input,
+        select {
+            height: 25px;
+            width: 200px;
+            font-size: 15px;
+            padding: 2px;
+        }
+        
+        form {
+            padding: 15px;
+        }
+        
+        div {
+            float: right;
+            top: 100px;
+        }
+        
+        #op {
+            color: rgb(17, 0, 255);
+            font-family: Copperplate, Papyrus, fantasy;
+            font-size: 25px;
+            text-align: center;
+            font-weight: bolder;
+        }
+        
+        .button {
+            color: #fff;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-left: 20px;
+            padding-right: 20px;
+            background-color: #38D2D2;
+            background-image: radial-gradient(93% 87% at 87% 89%, rgba(0, 0, 0, 0.23) 0%, transparent 86.18%), radial-gradient(66% 66% at 26% 20%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 69.79%, rgba(255, 255, 255, 0) 100%);
+            box-shadow: inset -3px -3px 9px rgba(255, 255, 255, 0.25), inset 0px 3px 9px rgba(255, 255, 255, 0.3), inset 0px 1px 1px rgba(255, 255, 255, 0.6), inset 0px -8px 36px rgba(0, 0, 0, 0.3), inset 0px 1px 5px rgba(255, 255, 255, 0.6), 2px 19px 31px rgba(0, 0, 0, 0.2);
+            border-radius: 14px;
+            font-weight: bold;
+            font-size: 25px;
+            border: 0;
+            user-select: none;
+            -webkit-user-select: none;
+            touch-action: manipulation;
+            cursor: pointer;
+            float: right;
+            font-family: 'Comic Sans MS', Comic Sans;
+        }
+    </style>
+
+    <body>
+        <h1>CAR RESALE PREDICTION</h1>
+        <form action="{{ url_for('predict')}}" method="post">
+            <fieldset style="width:54%;">
+                <table>
+                    <tr>
+                        <td>
+                            <h3>YEAR</h3>
+                        </td>
+                        <td><input id="first" name="Year" type="number " placeholder="Eg. 2014" required="required"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3>SHOWROOM PRICE(In lakhs)</h3>
+                        </td>
+                        <td><input id="second" name="Present_Price" required="required" placeholder="Eg. 14 (its mean 14 lakh)"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3>KILOMETERS DRIVED</h3>
+                        </td>
+                        <td><input id="third" name="Kms_Driven" required="required" placeholder="Eg. 24000"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3>NO OF OWNERS PREVIOUSLY HAD THE CAR</h3>
+                        </td>
+                        <td><input id="fourth" name="Owner" required="required" placeholder="Eg. 1"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3>FUEL TYPE</h3>
+                        </td>
+                        <td>
+                            <select name="Fuel_Type_Petrol" id="fuel" required="required">
+                            <option value="Petrol">Petrol</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="Diesel">CNG</option>
+                        </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3>DEALER OR INDIVIDUAL</h3>
+                        </td>
+                        <td>
+                            <select name="Seller_Type_Individual" id="resea" required="required">
+                            <option value="Dealer">Dealer</option>
+                            <option value="Individual">Individual</option>
+                        </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <h3>TRANSMISSION TYPE</h3>
+                        </td>
+                        <td>
+                            <select name="Transmission_Mannual" id="research" required="required">
+                            <option value="Mannual">Manual Car</option>
+                            <option value="Automatic">Automatic Car</option>
+                        </select>
+                        </td>
+                    </tr>
+                </table><br>
+                <button class="button" role="button" id="sub" type="submit" value="SUBMIT" style="color:white;background-color:rgb(2, 125, 21);">SUBMIT</button>
+            </fieldset>
+            <div>
+                <img src="https://cdn.dribbble.com/users/515394/screenshots/5084521/media/8ff9fcc6ad5c17b43010f6262e822ebb.gif" width="100%" height="50%">
+                <br><br><br>
+                <span id="op">
+                    <h3>{{ prediction_text }}</h3>
+                </span>
+            </div>
+        </form>
+    </body>
+</head>
+
+</html>
